@@ -1,0 +1,141 @@
+.traffic_car_state {
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    width: 320px;
+}
+
+.traffic_car_state div {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    background-color: rgb(136, 136, 136);
+    border-radius: 100%;
+}
+
+.car_white.active {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 100%;
+    
+}
+
+.car_red.active {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    background-color: red;
+    border-radius: 100%;
+    
+}
+
+.car_yellow.active {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    background-color: yellow;
+    border-radius: 100%;
+}
+
+.car_green.active {
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    background-color: green;
+    border-radius: 100%;
+}
+
+.traffic_crosswalk_state {
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    width: 160px;
+}
+
+.crosswalk_red, .crosswalk_green {
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    margin: 5px;
+    background-color: rgb(136, 136, 136);
+}
+
+.crosswalk_red.active {
+    background: red; /* 활성화 시 빨간색 */
+}
+
+.crosswalk_green.active {
+    background: green; /* 활성화 시 초록색 */
+}
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #627770;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.img {
+    margin-top: 40px;
+}
+
+.btn {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.btn button {
+    margin-bottom: 20px;
+    background-color: #77af9c;
+    color: #d7fff1;
+    border: none;
+    border-radius: 15px;
+    padding: 40px 20px;
+    font-size: 20px;
+}
+
+.btn button:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.bg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    padding: 10px 30px;
+    border-radius: 15px;
+    height: 700px;
+}
+
+.state_title h3 {
+    text-align: center;
+}
+
+.brightness_num {
+    height: 85px;
+    text-align: center;
+    align-content: center;
+    font-weight: bold;
+}

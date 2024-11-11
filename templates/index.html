@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='appstyle.css')}}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>신호등 제어 시스템</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="bg">
+            <div class="col">
+                <div class="row">
+                    <div class="car">
+                        <div class="state_title">
+                            <h3>도로 현재 상태</h3>
+                        </div>
+                        <div class="traffic_car_state">
+                            <div class="car_white"></div>
+                            <div class="car_red"></div>
+                            <div class="car_yellow"></div>
+                            <div class="car_green"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="crosswalk">
+                        <div class="state_title">
+                            <h3>횡단보도 신호 상태</h3>
+                        </div>
+                        <div class="traffic_crosswalk_state">
+                            <div class="crosswalk_red"></div>
+                            <div class="crosswalk_green"></div>
+                        </div>
+                    </div>
+
+                    <div class="brightness">
+                        <div class="state_title">
+                            <h3>밝기</h3>
+                        </div>
+                        <div class="brightness_num">{{ num }}</div>
+                    </div>
+                </div>
+                <div class="img">
+                    <img src="{{url_for('video_feed')}}">
+                </div>
+            </div>
+
+            <!-- <div class="btn">
+            <button class="remote_btn" onclick="controlSignal('road', 'on')">도로 신호등 ON</button>
+            <button class="remote_btn" onclick="controlSignal('road', 'off')">도로 신호등 OFF</button>
+            <button class="remote_btn" onclick="controlSignal('left', 'on')">좌회전 신호등 ON</button>
+            <button class="remote_btn" onclick="controlSignal('crosswalk', 'on')">횡단보도 신호등 ON</button>
+    </div> -->
+        </div>
+    </div>
+    <script>
+        function updateCarLedStatus() {
+            $.ajax({
+                url: '/led_status',
+                method: 'GET',
+                success: function (response) {
+                    console.log("LED 상태:", response);
+                    // 각 LED 상태에 따라 UI 업데이트
+                    $('.car_white').toggleClass('active', response[0] > 0);
+                    $('.car_red').toggleClass('active', response[1] > 0);
+                    $('.car_yellow').toggleClass('active', response[2] > 0);
+                    $('.car_green').toggleClass('active', response[3] > 0);
+                },
+                error: function (error) {
+                    console.error("LED 상태를 가져오는 중 오류 발생:", error);
+                }
+            });
+        }
+
+        function updateCrossLedStatus() {
+            $.ajax({
+                url: '/cross_status',
+                method: 'GET',
+                success: function (response) {
+                    console.log("LED 상태:", response);
+                    // 각 LED 상태에 따라 UI 업데이트
+                    $('.crosswalk_red').toggleClass('active', response[0] > 0);
+                    $('.crosswalk_green').toggleClass('active', response[1] > 0);
+                },
+                error: function (error) {
+                    console.error("LED 상태를 가져오는 중 오류 발생:", error);
+                }
+            });
+        }
+
+        function controlSignal(type, action) {
+            $.ajax({
+                url: '/control_signal',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ type: type, action: action }),
+                success: function (response) {
+                    console.log("신호 상태:", response.traffic_state);
+                },
+                error: function (error) {
+                    console.error("신호 제어 중 오류 발생:", error);
+                }
+            });
+        }
+
+        function updateBrightness() {
+    $.ajax({
+        url: '/brightness',
+        method: 'GET',
+        success: function (response) {
+            $('.brightness_num').text(response.brightness);  // 조도 값 업데이트
+        },
+        error: function (error) {
+            console.error("조도 값을 가져오는 중 오류 발생:", error);
+        }
+    });
+}
+
+
+        // 주기적으로 LED 상태 업데이트
+        $(document).ready(function () {
+            setInterval(updateCarLedStatus, 1000);  // 1초마다 업데이트
+            setInterval(updateCrossLedStatus, 1000);  // 1초마다 업데이트
+            setInterval(updateBrightness, 1000);  // 1초마다 조도 업데이트
+        });
+    </script>
+</body>
+
+</html>
